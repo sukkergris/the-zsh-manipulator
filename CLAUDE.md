@@ -74,11 +74,15 @@ right first and keep protected:
 ## Structure (once code exists)
 
 - Pure-zsh plugin code lives at the top level, following the Oh My Zsh
-  plugin convention (`<name>.plugin.zsh` as the entry point).
-- Any compiled helper binary lives in its own subdirectory (e.g. `src/`
-  for Zig) and is treated as an implementation detail the zsh layer
-  shells out to — the zsh side should degrade gracefully or give a
-  clear error if the binary is missing/unbuilt.
+  plugin convention (`<name>.plugin.zsh` as the entry point). This
+  includes early scratch files like `koll.zsh` from Lesson 1, as well
+  as `spec/` — all zsh source and its specs stay at repo root.
+- `src/` is reserved *only* for the future compiled helper binary (Zig).
+  It does not exist yet and should not be created until that binary is
+  actually being added. Any compiled helper binary lives in its own
+  subdirectory (e.g. `src/` for Zig) and is treated as an implementation
+  detail the zsh layer shells out to — the zsh side should degrade
+  gracefully or give a clear error if the binary is missing/unbuilt.
 
 ## Reference
 

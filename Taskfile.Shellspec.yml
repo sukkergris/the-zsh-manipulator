@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  init:
+    desc: Scaffold shellspec's spec/ directory (run once, per CLAUDE.md Lesson 1)
+    cmds:
+      - shellspec --init
+
+  run:
+    desc: Run the full spec/ suite once
+    cmds:
+      - shellspec
+
+  watch:
+    desc: Re-run specs on file changes (the fast dev loop from CLAUDE.md)
+    cmds:
+      - shellspec --watch
+
+  file:
+    desc: Run a single spec file (usage - task spec:file -- spec/some_spec.sh)
+    cmds:
+      - shellspec {{.CLI_ARGS}}
