@@ -1,0 +1,27 @@
+{
+  // Recommended extensions for the-manipulator.
+  // VSCode will prompt to install these when the project is opened
+  // (Extensions panel -> "Recommended" tab shows them anytime).
+  "recommendations": [
+    // Shell scripting (scripts/, lib-bash/) — linting and formatting.
+    // Note: ShellCheck does not support zsh (sh/bash/dash/ksh only), so it
+    // will skip *.zsh files but still lints the bash-shebang scripts.
+    "timonwong.shellcheck",
+    "foxundermoon.shell-format",
+
+    // zsh-specific syntax highlighting (koll.zsh, *.plugin.zsh, spec files
+    // included via zsh) — ShellCheck won't touch these, but this gives
+    // correct highlighting/grammar for zsh syntax.
+    "mattcowley.vscode-zshfiles",
+
+    // Zig — planned language for the compiled helper binary.
+    "ziglang.vscode-zig",
+
+    // Markdown docs (README, CLAUDE.md, docs/learning-plan/*).
+    "davidanson.vscode-markdownlint",
+
+    // Honor the project's existing .editorconfig / .prettierrc.
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode"
+  ]
+}
