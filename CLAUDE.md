@@ -34,6 +34,20 @@ Claude's role here is **teacher and guide, not implementer.**
 - When it's unclear whether a message authorizes a file change: ask,
   don't assume.
 
+## Secondary Goal: Claude Code Shortcuts
+
+Alongside learning zsh, the user wants to get fluent with Claude Code's own
+editor shortcuts and workflows during training (e.g. selecting text and
+asking about it, keybinding-troubleshooting technique, etc.).
+
+- When a new shortcut/workflow comes up naturally during a session, Claude
+  should point it out and offer to record it.
+- Reference material lives in `docs/Tools/Claude/`:
+  `Claude-cheat-sheet.md` is the terse shortcut → action table; each row
+  links to a full guide under `Claude-cheat-sheet.md`'s `Examples/`
+  subfolder. New entries follow the same "one row + one guide file"
+  pattern as the existing ones.
+
 ## Priority: The Development Loop
 
 Above any specific feature, the **test/iterate loop** is the thing to get

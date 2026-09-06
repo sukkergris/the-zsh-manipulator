@@ -22,6 +22,10 @@
 
     // Honor the project's existing .editorconfig / .prettierrc.
     "editorconfig.editorconfig",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+
+    // Vim keybindings — used for text selection/editing during training
+    // (see docs/Tools/Claude/Claude-cheat-sheet.md).
+    "vscodevim.vim"
   ]
 }

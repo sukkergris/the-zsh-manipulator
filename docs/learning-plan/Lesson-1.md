@@ -15,9 +15,7 @@ functionality matters yet — only that this loop is fast and trustworthy.
 - shellspec installed (`./scripts/install-shellspec.sh`, or `brew install
   shellspec` directly). Verify with:
 
-  ```sh
-  shellspec --version
-  ```
+      shellspec --version
 
 ## Step 1 — Tell shellspec to use zsh
 
@@ -25,15 +23,11 @@ Shellspec is shell-agnostic and defaults to `sh`. Since this project's code
 is zsh, pin the shell explicitly in a `.shellspec` config file at the repo
 root:
 
-```
---shell zsh
-```
+  --shell zsh
 
 Then scaffold the conventional layout:
 
-```sh
-shellspec --init
-```
+  shellspec --init
 
 This creates a `spec/` directory and `spec/spec_helper.sh` (a file sourced
 before every spec — useful later for shared setup/teardown).
@@ -42,11 +36,9 @@ before every spec — useful later for shared setup/teardown).
 
 Create `koll.zsh` at the project root:
 
-```zsh
-greet() {
-  echo "Hello, $1!"
-}
-```
+    greet() {
+      echo "Hello, $1!"
+    }
 
 This is deliberately trivial — the point of this lesson is the *loop*, not
 the function.
@@ -55,16 +47,14 @@ the function.
 
 Create `spec/greet_spec.sh`:
 
-```sh
-Describe 'greet'
-  Include ../koll.zsh
+    Describe 'greet'
+      Include ../koll.zsh
 
-  It 'greets the given name'
-    When call greet "World"
-    The output should equal "Hello, World!"
-  End
-End
-```
+      It 'greets the given name'
+        When call greet "World"
+        The output should equal "Hello, World!"
+      End
+    End
 
 Notes on the syntax:
 
@@ -83,9 +73,7 @@ Notes on the syntax:
 
 ## Step 4 — Run it
 
-```sh
-shellspec
-```
+  shellspec
 
 Expect this to pass first try, since the spec matches the function exactly.
 **Before moving on, deliberately break something** to see a real failure —
