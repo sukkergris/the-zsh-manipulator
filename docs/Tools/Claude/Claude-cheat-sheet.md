@@ -4,7 +4,7 @@ Quick shortcut reference. Each row links to a full guide under
 [Examples/](Examples/) with steps, context, and known issues.
 
 | Shortcut | Action | Guide |
-|---|---|---|
+| --- | --- | --- |
 | `Cmd+Escape` | Focus chat input (carries current selection as context) | [Select text, then ask Claude](Examples/Claude-Select-Text-Form-Prompting.md) |
 | `Option+K` | Insert `@file#line-line` reference into the prompt | [Select text, then ask Claude](Examples/Claude-Select-Text-Form-Prompting.md) |
 
