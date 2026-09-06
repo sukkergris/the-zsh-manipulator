@@ -2,10 +2,10 @@
 
 ## Shortcut
 
-| Action | Shortcut |
+|Action|Shortcut|
 |---|---|
-| Focus Claude's chat input (carries current selection as context) | `Cmd+Escape` |
-| Insert an explicit `@file#line-line` reference into the prompt | `Option+K` |
+|Focus Claude's chat input (carries current selection as context)|`Cmd+Escape`|
+|Insert an explicit `@file#line-line` reference into the prompt|`Option+K`|
 
 ## Steps
 
