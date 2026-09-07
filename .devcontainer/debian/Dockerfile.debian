@@ -114,4 +114,7 @@ RUN curl -fsSL https://antigravity.google/cli/install.sh | bash && \
 
 # Pre-create the dirs that get volume-mounted so they are owned by the
 # non-root user rather than root when Docker creates them on first mount.
-RUN mkdir -p $HOME_DIR/.local/bin $HOME_DIR/.gemini $HOME_DIR/.claude $HOME_DIR/.config/gh
+RUN mkdir -p $HOME_DIR/.local/bin \
+             $HOME_DIR/.gemini \
+             $HOME_DIR/.claude
+            # $HOME_DIR/.config/gh
