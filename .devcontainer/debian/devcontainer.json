@@ -1,0 +1,36 @@
+{
+  "name": "the-manipulator",
+
+  "dockerComposeFile": "docker-compose.yml",
+
+  "service": "dev",
+
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/container-user/.sshtemplate,type=bind,readonly,consistency=cached",
+    "source=the-maipulator-claude-${localWorkspaceFolderBasename},target=/home/container-user/.claude,type=volume",
+    "source=the-manipulator-continue-${localWorkspaceFolderBasename},target=/home/container-user/.continue,type=volume",
+    "source=the-manipulator-gh-${localWorkspaceFolderBasename},target=/home/container-user/.config/gh,type=volume"
+  ],
+
+  // Keep customizations for VS Code settings and extensions
+  "customizations": {
+    "vscode": {
+      "settings": {
+        // Set bash as the default terminal (installed in Dockerfile)
+        "terminal.integrated.defaultProfile.linux": "zsh"
+        // Optional Neovim integration path:
+        // "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim"
+      },
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "EditorConfig.EditorConfig",
+        "task.vscode-task"
+      ]
+    }
+  },
+
+  // The user VS Code should run as inside the service container.
+  // Should match the user the service runs as (root in this case).
+  "remoteUser": "container-user"
+}

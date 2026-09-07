@@ -20,6 +20,10 @@
     // Markdown docs (README, CLAUDE.md, docs/learning-plan/*).
     "davidanson.vscode-markdownlint",
 
+    // Checkbox toggling (Alt+C), list continuation, TOC and table
+    // formatting — used by the *.todo.md lesson checklists.
+    "yzhang.markdown-all-in-one",
+
     // Honor the project's existing .editorconfig / .prettierrc.
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",

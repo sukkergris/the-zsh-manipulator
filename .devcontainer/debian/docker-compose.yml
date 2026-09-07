@@ -1,0 +1,13 @@
+services:
+  dev:
+    build:
+      # Use the current directory (.devcontainer) as the build context
+      context: .
+      dockerfile: Dockerfile.debian
+
+    # Define volumes to mount
+    volumes:
+      - ..:/workspace:cached
+
+    command: sleep infinity
+
