@@ -30,7 +30,13 @@
         "EditorConfig.EditorConfig",
         "task.vscode-task",
         "Anthropic.claude-code",
-        "google.google-antigravity"
+        "google.google-antigravity",
+        "esbenp.prettier-vscode",
+        "yzhang.markdown-all-in-one",
+        "DavidAnson.vscode-markdownlint",
+        "foxundermoon.shell-format",
+        "timonwong.shellcheck",
+        "ziglang.vscode-zig"
       ]
     }
   },

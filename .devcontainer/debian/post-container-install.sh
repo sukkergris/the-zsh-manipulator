@@ -10,7 +10,7 @@ export NVM_DIR="$HOME/.nvm"
 # shellcheck disable=SC1091
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-WORKSPACE_DIR="/workspace"
+WORKSPACE_DIR="/xyz"
 SCRIPTS_DIR="$WORKSPACE_DIR/.devcontainer/scripts"
 
 # Docker creates fresh volumes owned by root, which leaves the tools that own
