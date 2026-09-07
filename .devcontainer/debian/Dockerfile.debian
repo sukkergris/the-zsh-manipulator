@@ -113,6 +113,14 @@ RUN curl -fsSL https://antigravity.google/cli/install.sh | bash && \
     sudo chmod 755 /usr/local/bin/agy && \
     /usr/local/bin/agy --help >/dev/null
 
+# Install shellspec (test framework, see CLAUDE.md). Installs into
+# $HOME_DIR/.local/bin via a plain symlink, no sudo/root needed; that
+# directory is already on PATH (see the ENV PATH above) and is NOT a Docker
+# volume (see devcontainer.json), so the baked-in binary survives container
+# recreates.
+RUN curl -fsSL https://git.io/shellspec | sh -s -- --yes && \
+    shellspec --version
+
 # Pre-create the dirs that get volume-mounted so they are owned by the
 # non-root user rather than root when Docker creates them on first mount.
 RUN mkdir -p $HOME_DIR/.local/bin \
