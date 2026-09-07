@@ -1,4 +1,4 @@
-FROM debian:12-slim
+FROM debian:trixie
 
 # Use bash for the shell (default is sh)
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -27,11 +27,11 @@ RUN apt-get update && \
     libssl-dev \
     cargo \
     make \
-    yarn \
     git \
     openssh-client \
     xclip \
     ripgrep \
+    shellcheck \
     build-essential \
     bash \
     zsh \
@@ -65,8 +65,6 @@ RUN NVIM_FILE="nvim-linux-arm64.tar.gz" && \
         # Link the binary to /usr/local/bin so it's globally available - remember to add '/usr/local/bin/' to path!
     ln -s /opt/nvim-linux-arm64/bin/nvim /usr/local/bin/nvim
 
-# Install Elm and tools (consolidated, removed unnecessary args)
-ENV ELM_VERSION=0.19.2
 ENV TASK_VERSION=v3.52.0
 RUN TASK_URL="https://github.com/go-task/task/releases/download/${TASK_VERSION}/task_linux_arm64.tar.gz" && \
     curl -L "$TASK_URL" | tar -xz -C /usr/local/bin task
@@ -75,8 +73,6 @@ RUN TASK_URL="https://github.com/go-task/task/releases/download/${TASK_VERSION}/
 USER $USERNAME
 WORKDIR $HOME_DIR
 
-RUN mkdir -p $HOME_DIR/.elm
-
 # Install nvm + Node and expose binaries system-wide
 ENV NVM_DIR=/home/${USERNAME}/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
@@ -84,10 +80,15 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     nvm install "$NODE_VERSION" && \
     nvm alias default "$NODE_VERSION" && \
     nvm use default && \
+    # Node ships corepack, which provides yarn/pnpm on demand and honors each
+    # project's "packageManager" field. Debian has no `yarn` package, so this
+    # replaces what used to be an (always-failing) apt install.
+    corepack enable && \
     node_bin="$NVM_DIR/versions/node/$(nvm version default)/bin" && \
     sudo ln -sf "$node_bin/node" /usr/local/bin/node && \
     sudo ln -sf "$node_bin/npm"  /usr/local/bin/npm && \
-    sudo ln -sf "$node_bin/npx"  /usr/local/bin/npx
+    sudo ln -sf "$node_bin/npx"  /usr/local/bin/npx && \
+    sudo ln -sf "$node_bin/yarn" /usr/local/bin/yarn
 
 # Install oh-my-zsh + powerlevel10k. Global npm tools and the Antigravity CLI
 # are installed at container-create time instead (see .devcontainer/scripts/),

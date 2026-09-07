@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working
+with code in this repository.
+
 ## What This Is
 
 A learning project for building zsh plugins/extensions (functions, aliases,
@@ -65,13 +68,19 @@ right first and keep protected:
 - **Framework:** [shellspec](https://github.com/shellspec/shellspec)
   (`brew install shellspec`). Chosen over zunit, which is effectively
   unmaintained and not installed anywhere on this system.
-- Spec files live under `spec/`, named `*_spec.sh`.
-- Run the full suite with `shellspec`; run one file with
-  `shellspec spec/some_spec.sh`.
-- Prefer `shellspec --watch` (or equivalent) during active development
-  for fast feedback.
+- Spec files live under `spec/`, named `*_spec.sh`. `.shellspec` pins
+  `--shell zsh`; `spec/spec_helper.sh` enforces a minimum shellspec
+  version of 0.28.1.
+- Run the full suite with `shellspec` (or `task spec:run`); run one file
+  with `shellspec spec/some_spec.sh` (or `task spec:file -- spec/some_spec.sh`).
+- Prefer `shellspec --watch` (or `task spec:watch`) during active
+  development for fast feedback.
+- `task` with no arguments lists all available tasks. `Taskfile.yml` is
+  the top-level entry point; task-specific files are split out and
+  `include`d (e.g. `Taskfile.Shellspec.yml`) rather than kept in one
+  large file — follow that pattern for new task groups.
 
-## Structure (once code exists)
+## Structure
 
 - Pure-zsh plugin code lives at the top level, following the Oh My Zsh
   plugin convention (`<name>.plugin.zsh` as the entry point). This
@@ -83,6 +92,27 @@ right first and keep protected:
   subdirectory (e.g. `src/` for Zig) and is treated as an implementation
   detail the zsh layer shells out to — the zsh side should degrade
   gracefully or give a clear error if the binary is missing/unbuilt.
+- `lib-bash/` is a separate **bash** (not zsh) module system for
+  dev-environment/setup scripts — unrelated to the plugin itself:
+  - `root-marker` (repo root, plain marker file) is located by
+    `root-loader.sh` walking up from its own location (max 5 levels) to
+    determine `PROJECT_ROOT`; it also exports `LIB_DIR` and
+    `SCRIPTS_DIR`. Don't remove/rename `root-marker` without updating
+    that logic.
+  - `module-loader.sh` provides `load_module`/`load_optional_module`,
+    which `find` a module by basename anywhere under `LIB_DIR` and
+    `source` it exactly once (tracked in `LOADED_MODULES`).
+  - `header.sh` is the standard entry point for bash scripts in this
+    project: sourcing it loads `root-loader.sh` and `module-loader.sh`,
+    then always loads the `error-handling` and `logging` modules.
+  - `error-handling.sh` sets `set -Eeuo pipefail` and installs an ERR
+    trap that prints exit code/line/command before exiting.
+  - `logging.sh` provides `log::info`/`log::warn`/`log::error`/`log::ok`.
+  - `os-detection.sh` exports `OS_FAMILY`, `OS`, `IS_WSL`, `ARCH`,
+    `IN_CONTAINER` and predicates like `is_macos`/`is_linux`/`is_wsl`.
+  - Modules use an include-guard idiom —
+    `[[ -n "${_NAME_LOADED:-}" ]] && return 0` / `_NAME_LOADED=1` — to
+    make sourcing idempotent; follow it for any new module.
 
 ## Reference
 
