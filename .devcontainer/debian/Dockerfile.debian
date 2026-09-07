@@ -89,8 +89,29 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     sudo ln -sf "$node_bin/npm"  /usr/local/bin/npm && \
     sudo ln -sf "$node_bin/npx"  /usr/local/bin/npx
 
-# Install user-specific tools in one layer
+# Install oh-my-zsh + powerlevel10k. Global npm tools and the Antigravity CLI
+# are installed at container-create time instead (see .devcontainer/scripts/),
+# so they land on persistent volumes and survive image rebuilds.
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME_DIR/.oh-my-zsh/custom/themes/powerlevel10k && \
-    npm install --global \
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME_DIR/.oh-my-zsh/custom/themes/powerlevel10k
 
+# Install the Antigravity CLI (`agy`).
+#
+# The upstream installer hardcodes $HOME/.local/bin, so install there and then
+# move the binary to /usr/local/bin. That matters because ~/.local/bin must NOT
+# be a Docker volume: a named volume mounted over a directory that already has
+# content in the image hides the image's copy, which would make the baked-in
+# binary vanish on the second container create.
+#
+# Credentials are a separate concern: `agy` keeps its OAuth token in ~/.gemini
+# (jetski-standalone-oauth-token, google_accounts.json). That directory IS a
+# named volume (see devcontainer.json), which is what keeps you logged in
+# across devcontainer rebuilds.
+RUN curl -fsSL https://antigravity.google/cli/install.sh | bash && \
+    sudo mv "$HOME_DIR/.local/bin/agy" /usr/local/bin/agy && \
+    sudo chmod 755 /usr/local/bin/agy && \
+    /usr/local/bin/agy --help >/dev/null
+
+# Pre-create the dirs that get volume-mounted so they are owned by the
+# non-root user rather than root when Docker creates them on first mount.
+RUN mkdir -p $HOME_DIR/.local/bin $HOME_DIR/.gemini $HOME_DIR/.claude $HOME_DIR/.config/gh
