@@ -5,7 +5,7 @@
 
   "service": "dev",
 
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/xyz",
   "mounts": [
     "source=${localEnv:HOME}/.ssh,target=/home/container-user/.sshtemplate,type=bind,readonly,consistency=cached",
     "source=the-manipulator-claude-${localWorkspaceFolderBasename},target=/home/container-user/.claude,type=volume",
@@ -28,7 +28,9 @@
       "extensions": [
         "ms-vscode-remote.remote-containers",
         "EditorConfig.EditorConfig",
-        "task.vscode-task"
+        "task.vscode-task",
+        "Anthropic.claude-code",
+        "google.google-antigravity"
       ]
     }
   },

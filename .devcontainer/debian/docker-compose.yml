@@ -7,7 +7,7 @@ services:
 
     # Define volumes to mount
     volumes:
-      - ..:/workspace:cached
+      - ../..:/xyz:cached
 
     command: sleep infinity
 
